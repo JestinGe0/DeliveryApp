@@ -1,6 +1,6 @@
 services:
   app:
-    image: ghcr.io/YOUR_GITHUB_USERNAME/pep-delivery:latest
+    image: ghcr.io/JestinGe0/pep-delivery:latest
     restart: unless-stopped
     ports:
       - "3000:3000"
