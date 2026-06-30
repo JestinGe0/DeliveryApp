@@ -48,6 +48,9 @@ function showApp() {
     // Initialize right panel toggle
     initRightPanel();
 
+    // Getting Started checklist (shown to new users)
+    if (typeof initChecklist === 'function') initChecklist();
+
     // Map screen is active by default after login — show the toggle button
     var panelBtn = document.getElementById('panelToggleBtn');
     if (panelBtn) panelBtn.style.display = 'flex';

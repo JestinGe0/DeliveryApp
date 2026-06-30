@@ -32,7 +32,7 @@ echo  Llama server starting on http://localhost:8080
 echo.
 
 echo  [3/4] Starting Python VRP optimiser (background)...
-powershell -WindowStyle Hidden -Command "Start-Process '!PYTHON_CMD!' -ArgumentList '\"!APP_DIR!\optimise.py\"' -WorkingDirectory '!APP_DIR!' -WindowStyle Hidden" >nul 2>&1
+powershell -WindowStyle Hidden -Command "Start-Process '!PYTHON_CMD!' -ArgumentList '\"!APP_DIR!\python\optimise.py\"' -WorkingDirectory '!APP_DIR!\python' -WindowStyle Hidden" >nul 2>&1
 echo  OR-Tools optimiser starting on http://localhost:8000
 echo.
 

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PEP Delivery — User Guide</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+    --bg: #0f1117;
+    --surface: #1a1d2e;
+    --surface-2: #24273a;
+    --border: rgba(255,255,255,.08);
+    --text: #e2e8f0;
+    --text-muted: #94a3b8;
+    --accent: #7c3aed;
+    --accent-light: #a78bfa;
+    --success: #22c55e;
+    --sidebar-w: 260px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); display: flex; min-height: 100vh; font-size: 15px; line-height: 1.6; }
+
+/* Sidebar */
+.sidebar {
+    width: var(--sidebar-w);
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    overflow-y: auto;
+    padding: 24px 0;
+    z-index: 10;
+}
+.sidebar-logo {
+    display: flex; align-items: center; gap: 10px;
+    padding: 0 20px 20px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 12px;
+    font-size: 18px; font-weight: 800; color: var(--text);
+}
+.sidebar-logo i { color: var(--accent); font-size: 20px; }
+.sidebar-section { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--text-muted); padding: 12px 20px 4px; }
+.sidebar a {
+    display: flex; align-items: center; gap: 9px;
+    padding: 8px 20px;
+    font-size: 13px; color: var(--text-muted);
+    text-decoration: none; border-radius: 0;
+    transition: color .12s, background .12s;
+}
+.sidebar a:hover, .sidebar a.active { color: var(--text); background: rgba(124,58,237,.12); }
+.sidebar a i { width: 16px; text-align: center; color: var(--accent-light); font-size: 12px; }
+
+/* Main content */
+.content {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    padding: 48px 56px;
+    max-width: calc(860px + var(--sidebar-w));
+}
+
+/* Typography */
+h1 { font-size: 32px; font-weight: 800; color: var(--text); margin-bottom: 8px; }
+h2 { font-size: 22px; font-weight: 700; color: var(--text); margin: 48px 0 16px; padding-top: 48px; border-top: 1px solid var(--border); }
+h2:first-of-type { border-top: none; margin-top: 24px; padding-top: 0; }
+h3 { font-size: 16px; font-weight: 700; color: var(--text); margin: 24px 0 8px; }
+p  { color: var(--text-muted); margin-bottom: 14px; }
+ul, ol { color: var(--text-muted); padding-left: 20px; margin-bottom: 14px; }
+li { margin-bottom: 6px; }
+strong { color: var(--text); font-weight: 600; }
+code {
+    background: var(--surface-2); border: 1px solid var(--border);
+    border-radius: 4px; padding: 1px 6px; font-size: 13px;
+    font-family: 'SF Mono', 'Fira Code', monospace; color: var(--accent-light);
+}
+
+/* Hero */
+.hero { margin-bottom: 32px; }
+.hero-subtitle { font-size: 17px; color: var(--text-muted); max-width: 560px; }
+
+/* Step cards */
+.steps { display: flex; flex-direction: column; gap: 12px; margin: 16px 0 24px; }
+.step-card {
+    display: flex; align-items: flex-start; gap: 16px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 20px;
+}
+.step-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--accent); color: #fff;
+    font-size: 13px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+.step-body h4 { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+.step-body p  { font-size: 13px; margin: 0; }
+
+/* Info boxes */
+.tip, .warn {
+    border-radius: 8px; padding: 12px 16px;
+    font-size: 13px; color: var(--text-muted);
+    margin: 16px 0; display: flex; gap: 12px; align-items: flex-start;
+}
+.tip  { background: rgba(124,58,237,.1); border: 1px solid rgba(124,58,237,.25); }
+.warn { background: rgba(245,158,11,.08); border: 1px solid rgba(245,158,11,.22); }
+.tip i  { color: var(--accent-light); margin-top: 2px; }
+.warn i { color: #f59e0b; margin-top: 2px; }
+
+/* Feature grid */
+.feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+.feature-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px;
+}
+.feature-card i { font-size: 18px; color: var(--accent-light); margin-bottom: 8px; }
+.feature-card h4 { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.feature-card p  { font-size: 12px; margin: 0; }
+
+/* Table */
+table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
+th { text-align: left; padding: 10px 14px; background: var(--surface-2); color: var(--text); font-weight: 600; border-bottom: 1px solid var(--border); }
+td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--text-muted); }
+tr:last-child td { border-bottom: none; }
+
+/* Status badges */
+.status {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 2px 9px; border-radius: 10px; font-size: 11px; font-weight: 700;
+}
+.s-pending    { background: rgba(148,163,184,.15); color: #94a3b8; }
+.s-picking    { background: rgba(245,158,11,.15);  color: #f59e0b; }
+.s-ready      { background: rgba(59,130,246,.15);  color: #60a5fa; }
+.s-delivering { background: rgba(168,85,247,.15);  color: #c084fc; }
+.s-delivered  { background: rgba(34,197,94,.15);   color: #4ade80; }
+.s-collected  { background: rgba(20,184,166,.15);  color: #2dd4bf; }
+.s-cancelled  { background: rgba(239,68,68,.15);   color: #f87171; }
+
+@media (max-width: 720px) {
+    .sidebar { display: none; }
+    .content { margin-left: 0; padding: 24px 20px; }
+    .feature-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav class="sidebar">
+    <div class="sidebar-logo"><i class="fas fa-truck-fast"></i> PEP Delivery</div>
+    <div class="sidebar-section">Overview</div>
+    <a href="#getting-started"><i class="fas fa-rocket"></i> Getting Started</a>
+    <a href="#order-statuses"><i class="fas fa-circle-half-stroke"></i> Order Statuses</a>
+    <div class="sidebar-section">Features</div>
+    <a href="#customers"><i class="fas fa-users"></i> Managing Customers</a>
+    <a href="#runs"><i class="fas fa-map"></i> Delivery Runs</a>
+    <a href="#routing"><i class="fas fa-route"></i> Route Optimisation</a>
+    <a href="#drivers"><i class="fas fa-truck"></i> Drivers</a>
+    <a href="#staff"><i class="fas fa-users-gear"></i> Staff Management</a>
+    <a href="#notifications"><i class="fas fa-envelope"></i> Email Notifications</a>
+    <a href="#weekly-plan"><i class="fas fa-calendar-week"></i> Weekly Plan</a>
+    <a href="#analytics"><i class="fas fa-chart-line"></i> Analytics</a>
+    <div class="sidebar-section">Reference</div>
+    <a href="#settings"><i class="fas fa-cog"></i> Settings</a>
+    <a href="#faq"><i class="fas fa-circle-question"></i> FAQ</a>
+</nav>
+
+<main class="content">
+
+    <div class="hero">
+        <h1>User Guide</h1>
+        <p class="hero-subtitle">Everything you need to manage deliveries with PEP — from importing customers to tracking your drivers in real time.</p>
+    </div>
+
+    <!-- ── Getting Started ── -->
+    <h2 id="getting-started"><i class="fas fa-rocket" style="color:var(--accent-light);margin-right:8px"></i>Getting Started</h2>
+    <p>Follow these five steps to go from a fresh install to your first completed delivery.</p>
+
+    <div class="steps">
+        <div class="step-card">
+            <div class="step-num">1</div>
+            <div class="step-body">
+                <h4>Add your drivers</h4>
+                <p>Go to <strong>Staff Management</strong> → <strong>Add Staff</strong>. Set the role to <strong>Driver</strong>. You can add as many drivers as you need.</p>
+            </div>
+        </div>
+        <div class="step-card">
+            <div class="step-num">2</div>
+            <div class="step-body">
+                <h4>Import your customers</h4>
+                <p>Open <strong>Current Orders</strong> and click <strong>Import</strong>. Upload a CSV with columns: <code>name</code>, <code>address</code>, <code>postcode</code>, <code>zone</code>. Or add customers one by one using <strong>Add Customer</strong>.</p>
+            </div>
+        </div>
+        <div class="step-card">
+            <div class="step-num">3</div>
+            <div class="step-body">
+                <h4>Create a delivery run</h4>
+                <p>Go to <strong>Map View</strong> and click <strong>New Run</strong>. Give it a name (e.g. "Monday AM"). Then drag customers from the list into the run, or use <strong>Auto-fill</strong> to add all customers at once.</p>
+            </div>
+        </div>
+        <div class="step-card">
+            <div class="step-num">4</div>
+            <div class="step-body">
+                <h4>Optimise the route</h4>
+                <p>Inside the run, click <strong>Optimise</strong>. The system will sort stops into the most efficient order. You can drag stops to manually reorder them after.</p>
+            </div>
+        </div>
+        <div class="step-card">
+            <div class="step-num">5</div>
+            <div class="step-body">
+                <h4>Assign a driver and go live</h4>
+                <p>Select a driver from the run panel, then click <strong>Start Run</strong>. Update each stop as <strong>Out for Delivery → Delivered</strong> as your driver progresses. Customers receive email notifications at each stage if configured.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Order Statuses ── -->
+    <h2 id="order-statuses"><i class="fas fa-circle-half-stroke" style="color:var(--accent-light);margin-right:8px"></i>Order Statuses</h2>
+    <p>Each customer order moves through these statuses during the day:</p>
+
+    <table>
+        <thead><tr><th>Status</th><th>Meaning</th><th>Who sets it</th></tr></thead>
+        <tbody>
+            <tr><td><span class="status s-pending">Pending</span></td><td>Order received, not yet being picked</td><td>Default on import</td></tr>
+            <tr><td><span class="status s-picking">Picking</span></td><td>Warehouse staff are picking this order</td><td>Picker dashboard or admin</td></tr>
+            <tr><td><span class="status s-ready">Ready</span></td><td>Picked and ready to load onto a van</td><td>Picker dashboard or admin</td></tr>
+            <tr><td><span class="status s-delivering">Out for Delivery</span></td><td>On the van, heading to the customer</td><td>Admin / bulk save</td></tr>
+            <tr><td><span class="status s-delivered">Delivered</span></td><td>Successfully delivered</td><td>Admin or driver</td></tr>
+            <tr><td><span class="status s-collected">Collected</span></td><td>Customer collected in person</td><td>Admin</td></tr>
+            <tr><td><span class="status s-cancelled">Cancelled</span></td><td>Order cancelled</td><td>Admin</td></tr>
+        </tbody>
+    </table>
+
+    <!-- ── Managing Customers ── -->
+    <h2 id="customers"><i class="fas fa-users" style="color:var(--accent-light);margin-right:8px"></i>Managing Customers</h2>
+
+    <h3>Importing via CSV</h3>
+    <p>Go to <strong>Current Orders</strong> → <strong>Import</strong>. Your CSV must have a header row. Supported columns:</p>
+    <table>
+        <thead><tr><th>Column</th><th>Required</th><th>Example</th></tr></thead>
+        <tbody>
+            <tr><td><code>name</code></td><td>Yes</td><td>John Smith</td></tr>
+            <tr><td><code>address</code></td><td>Yes</td><td>12 High Street, London</td></tr>
+            <tr><td><code>postcode</code></td><td>Recommended</td><td>SW1A 1AA</td></tr>
+            <tr><td><code>zone</code></td><td>No</td><td>North</td></tr>
+            <tr><td><code>day</code></td><td>No</td><td>Monday</td></tr>
+            <tr><td><code>lat</code> / <code>lng</code></td><td>No</td><td>51.5074 / -0.1278</td></tr>
+        </tbody>
+    </table>
+    <div class="tip"><i class="fas fa-lightbulb"></i><span>If your CSV doesn't have <code>lat</code>/<code>lng</code>, the system will geocode addresses automatically using the postcode or full address.</span></div>
+
+    <h3>Adding a customer manually</h3>
+    <p>Click <strong>Add Customer</strong> in Current Orders. Fill in the name and address, then click <strong>Geocode</strong> to look up the map coordinates automatically.</p>
+
+    <h3>Customer Passport</h3>
+    <p>Each customer has a <strong>Passport</strong> — a record containing their delivery preferences, contact email, and notes. Click the passport icon next to any customer to open it. The email stored here is used for delivery notifications.</p>
+
+    <!-- ── Delivery Runs ── -->
+    <h2 id="runs"><i class="fas fa-map" style="color:var(--accent-light);margin-right:8px"></i>Delivery Runs</h2>
+
+    <h3>Creating a run</h3>
+    <p>In <strong>Map View</strong>, click <strong>New Run</strong> in the top-right panel. Give the run a name. Runs are usually named by date or time slot — e.g. <em>Monday AM</em> or <em>2024-06-10 North</em>.</p>
+
+    <h3>Adding customers to a run</h3>
+    <p>Drag customers from the <strong>Customer List</strong> on the left into the run panel on the right. Alternatively, right-click a customer on the map and choose <strong>Add to Run</strong>. Use <strong>Auto-fill</strong> to add all unassigned customers at once.</p>
+
+    <h3>Reordering stops</h3>
+    <p>Drag stops up and down inside the run panel to set your preferred delivery order. After optimising you can still drag stops to override the suggested order.</p>
+
+    <h3>Saving and loading runs</h3>
+    <p>Click <strong>Save Run</strong> to store the current state. Saved runs appear in the <strong>Delivery Runs</strong> dropdown at the top of the Map View. Switching runs reloads all stops and route lines for that run.</p>
+
+    <!-- ── Route Optimisation ── -->
+    <h2 id="routing"><i class="fas fa-route" style="color:var(--accent-light);margin-right:8px"></i>Route Optimisation</h2>
+    <p>Click <strong>Optimise</strong> inside a run to automatically reorder stops for the shortest travel time. The route is drawn on the map as a coloured polyline.</p>
+
+    <h3>Optimisation settings</h3>
+    <p>Go to <strong>Settings → OR-Tools</strong> to configure how the optimiser behaves:</p>
+    <table>
+        <thead><tr><th>Setting</th><th>What it does</th></tr></thead>
+        <tbody>
+            <tr><td>Max stops per run</td><td>Limits how many stops one driver can handle</td></tr>
+            <tr><td>Max distance (km)</td><td>Caps the total route length</td></tr>
+            <tr><td>Drop penalty</td><td>How hard the optimiser tries to include every stop</td></tr>
+            <tr><td>Time limit (s)</td><td>How long the solver runs before returning its best answer</td></tr>
+        </tbody>
+    </table>
+    <div class="tip"><i class="fas fa-lightbulb"></i><span>For large runs (50+ stops), increase the time limit to 30–60 seconds for better results.</span></div>
+
+    <!-- ── Drivers ── -->
+    <h2 id="drivers"><i class="fas fa-truck" style="color:var(--accent-light);margin-right:8px"></i>Drivers</h2>
+
+    <h3>Driver View</h3>
+    <p>The <strong>Driver View</strong> screen shows a simplified card-based interface intended for drivers. Each card shows a customer name, address, and status buttons. Drivers tap <strong>Out for Delivery</strong> when they leave for a stop and <strong>Delivered</strong> when the order is complete.</p>
+
+    <h3>Assigning a driver to a run</h3>
+    <p>In the run panel, click the <strong>Assign Driver</strong> dropdown and select a driver. Once assigned, the driver's name appears on the run header and the route line changes to a solid colour.</p>
+    <div class="tip"><i class="fas fa-lightbulb"></i><span>Runs with a driver assigned show a <strong>solid</strong> route line on the map. Unassigned runs show a <strong>dotted</strong> line.</span></div>
+
+    <!-- ── Staff Management ── -->
+    <h2 id="staff"><i class="fas fa-users-gear" style="color:var(--accent-light);margin-right:8px"></i>Staff Management</h2>
+    <p>Go to <strong>Staff Management</strong> to add, edit, or deactivate staff members.</p>
+
+    <h3>Roles</h3>
+    <table>
+        <thead><tr><th>Role</th><th>Access</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Admin</strong></td><td>Full access to all screens and settings</td></tr>
+            <tr><td><strong>Manager</strong></td><td>All operational screens; cannot change system settings</td></tr>
+            <tr><td><strong>Staff</strong></td><td>Map, Orders, Driver View, Pickers, Gamification</td></tr>
+            <tr><td><strong>Driver</strong></td><td>Driver View only</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Adding a new staff member</h3>
+    <ol>
+        <li>Click <strong>Add Staff</strong></li>
+        <li>Enter their full name and a username (lowercase, no spaces)</li>
+        <li>Set a temporary password — they should change it after first login</li>
+        <li>Select a role</li>
+        <li>Click <strong>Save</strong></li>
+    </ol>
+
+    <!-- ── Email Notifications ── -->
+    <h2 id="notifications"><i class="fas fa-envelope" style="color:var(--accent-light);margin-right:8px"></i>Email Notifications</h2>
+    <p>PEP can automatically email customers when their order status changes.</p>
+
+    <h3>Setup</h3>
+    <ol>
+        <li>Go to <strong>Settings → Emails</strong></li>
+        <li>Enter your SMTP server details (host, port, username, password)</li>
+        <li>Click <strong>Send Test Email</strong> to verify the connection</li>
+        <li>Enable the notification types you want to send</li>
+        <li>Click <strong>Save Settings</strong></li>
+    </ol>
+
+    <div class="tip"><i class="fas fa-lightbulb"></i><span>Using Gmail? You must use an <strong>App Password</strong>, not your regular Gmail password. Generate one at <strong>Google Account → Security → App Passwords</strong>.</span></div>
+
+    <h3>Which email address is used?</h3>
+    <p>The customer's email is read from their <strong>Passport</strong>. Open a customer's passport and set the <code>customerEmail</code> field. Without an email address stored there, no notification will be sent for that customer.</p>
+
+    <h3>Available notifications</h3>
+    <table>
+        <thead><tr><th>Trigger</th><th>Template sent</th></tr></thead>
+        <tbody>
+            <tr><td>Status changes to <span class="status s-delivering">Out for Delivery</span></td><td>"Your order is on its way"</td></tr>
+            <tr><td>Status changes to <span class="status s-delivered">Delivered</span></td><td>"Your order has been delivered"</td></tr>
+            <tr><td>A driver is assigned to the order</td><td>"Your driver has been assigned"</td></tr>
+        </tbody>
+    </table>
+
+    <!-- ── Weekly Plan ── -->
+    <h2 id="weekly-plan"><i class="fas fa-calendar-week" style="color:var(--accent-light);margin-right:8px"></i>Weekly Plan</h2>
+    <p>The <strong>Weekly Plan</strong> screen gives you a visual timeline of all scheduled deliveries across the week. Each run appears as a block on its assigned day.</p>
+    <ul>
+        <li>Drag runs left and right to move them to a different day</li>
+        <li>Click a run block to open it in Map View</li>
+        <li>Use the <strong>+ Add Run</strong> button to schedule a new run directly from this screen</li>
+    </ul>
+
+    <!-- ── Analytics ── -->
+    <h2 id="analytics"><i class="fas fa-chart-line" style="color:var(--accent-light);margin-right:8px"></i>Analytics</h2>
+    <p>The <strong>Analytics</strong> screen shows delivery performance over time:</p>
+
+    <div class="feature-grid">
+        <div class="feature-card">
+            <i class="fas fa-check-circle"></i>
+            <h4>Delivery rate</h4>
+            <p>Percentage of orders delivered vs cancelled or failed.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-clock"></i>
+            <h4>On-time performance</h4>
+            <p>How many deliveries were completed within their ETA window.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-route"></i>
+            <h4>Distance per run</h4>
+            <p>Total km driven across all runs, broken down by day.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-trophy"></i>
+            <h4>Driver leaderboard</h4>
+            <p>Ranked by deliveries completed — also visible in Gamification.</p>
+        </div>
+    </div>
+
+    <!-- ── Settings ── -->
+    <h2 id="settings"><i class="fas fa-cog" style="color:var(--accent-light);margin-right:8px"></i>Settings</h2>
+    <p>Settings are only visible to <strong>Admin</strong> users.</p>
+
+    <table>
+        <thead><tr><th>Tab</th><th>What you can configure</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Company</strong></td><td>Company name, logo, warehouse address and coordinates</td></tr>
+            <tr><td><strong>Emails</strong></td><td>SMTP connection, notification toggles</td></tr>
+            <tr><td><strong>Route Display</strong></td><td>Map colours, polyline style, ETA windows</td></tr>
+            <tr><td><strong>OR-Tools</strong></td><td>Route optimiser parameters</td></tr>
+            <tr><td><strong>ETA</strong></td><td>Delivery time windows, next-day shift toggle</td></tr>
+            <tr><td><strong>Audit Log</strong></td><td>View all admin actions with timestamps</td></tr>
+        </tbody>
+    </table>
+
+    <!-- ── FAQ ── -->
+    <h2 id="faq"><i class="fas fa-circle-question" style="color:var(--accent-light);margin-right:8px"></i>FAQ</h2>
+
+    <h3>How do I reset a customer's status back to Pending?</h3>
+    <p>Click the customer in Current Orders or Map View, change the status to <strong>Pending</strong>, and save. All email tracking resets automatically so they can receive notifications again in the next run.</p>
+
+    <h3>Can multiple drivers share one run?</h3>
+    <p>Each run has one assigned driver. To split work between two drivers, create two separate runs and divide the customers between them.</p>
+
+    <h3>My route optimisation isn't working</h3>
+    <p>Check that the Python OR-Tools service is running (<code>optimise.py</code>) and that the <code>PYTHON_URL</code> environment variable is set correctly. If you're not using OR-Tools, the app falls back to a simple nearest-neighbour sort.</p>
+
+    <h3>Emails are not being received</h3>
+    <ul>
+        <li>Check Settings → Emails shows a green <strong>Configured</strong> badge</li>
+        <li>Use <strong>Send Test Email</strong> to verify the SMTP connection</li>
+        <li>Confirm the customer's Passport has a valid <code>customerEmail</code></li>
+        <li>If using Gmail, ensure you're using an App Password, not your account password</li>
+    </ul>
+
+    <h3>How do I add a customer email after import?</h3>
+    <p>Click the passport icon next to the customer's name → add or edit the <code>customerEmail</code> field → Save Passport.</p>
+
+    <h3>Can customers see their own tracking page?</h3>
+    <p>Not in the current version. Tracking information is communicated via email notifications. A customer-facing tracking page is a planned future feature.</p>
+
+</main>
+
+<script>
+// Highlight active sidebar link on scroll
+var sections = document.querySelectorAll('h2[id]');
+var links    = document.querySelectorAll('.sidebar a');
+function onScroll() {
+    var pos = window.scrollY + 100;
+    var cur = '';
+    sections.forEach(function(s) { if (s.offsetTop <= pos) cur = s.id; });
+    links.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + cur);
+    });
+}
+window.addEventListener('scroll', onScroll);
+onScroll();
+</script>
+</body>
+</html>

@@ -86,7 +86,7 @@ echo.
 :: ---- Step 2: Python dependencies ----
 
 echo  [2/4] Installing Python dependencies...
-!PYTHON_CMD! -m pip install -r "!APP_DIR!\requirements.txt"
+!PYTHON_CMD! -m pip install -r "!APP_DIR!\python\requirements.txt"
 if %errorlevel% neq 0 (
     echo.
     echo  [FAIL] pip install failed.
