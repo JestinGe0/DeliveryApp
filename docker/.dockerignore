@@ -1,0 +1,25 @@
+node_modules
+server/node_modules
+server/data
+server/certs
+server/delivery.db
+server/.env
+server/test.html
+server/customers.json.xlsx
+server/update customers.php
+logs
+.env
+*.bat
+*.exe
+*.py
+llama-server
+deploy
+doc_unpacked
+*.docx
+*.xlsx
+*.php
+test.html
+.git
+.gitignore
+docker-compose.yml
+Dockerfile

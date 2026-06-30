@@ -1,0 +1,44 @@
+# Secrets & environment
+.env
+server/.env
+
+# TLS certificates
+server/certs/
+
+# Database & runtime data
+server/data/
+server/delivery.db
+docker/data/
+docker/certs/
+docker/logs/
+logs/
+
+# Dependencies
+node_modules/
+server/node_modules/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Binary & large files
+mkcert.exe
+llama-server/
+doc_unpacked/
+valhalla_uk.tar
+*.docx
+*.xlsx
+*.exe
+
+# Dev/test files
+server/test.html
+server/update customers.php
+
+# Claude Code session files
+.claude/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini

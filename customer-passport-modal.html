@@ -1,0 +1,1086 @@
+<!-- ===== CUSTOMER PASSPORT MODAL ===== -->
+<div class="modal" id="customerPassportModal">
+    <div class="modal-content passport-modal">
+        <div class="modal-header passport-header">
+            <h2><i class="fas fa-passport"></i> Customer Passport</h2>
+            <button class="close-btn" onclick="closePassportModal()">&times;</button>
+        </div>
+        <div class="modal-body passport-body">
+            <div id="passportCustomerInfo" class="passport-customer-info"></div>
+
+            <!-- ===== ORDERS OVERVIEW PANEL ===== -->
+            <div class="passport-orders-panel" id="passportOrdersPanel">
+                <div class="passport-orders-header">
+                    <div class="passport-orders-title">
+                        <i class="fas fa-boxes"></i>
+                        Orders for this customer
+                        <span class="orders-total-badge" id="ordersTotalBadge">1</span>
+                    </div>
+                    <button class="btn-add-order" onclick="showAddOrderForm()">
+                        <i class="fas fa-plus"></i> Add Order
+                    </button>
+                </div>
+                <div class="passport-orders-list" id="passportOrdersList"></div>
+                <div class="add-order-form" id="addOrderForm" style="display:none;">
+                    <div class="add-order-form-title">
+                        <i class="fas fa-plus-circle"></i>
+                        <span id="addOrderFormTitle">New Additional Order</span>
+                    </div>
+                    <div class="add-order-form-grid">
+                        <div>
+                            <label>Order Number</label>
+                            <input type="text" id="newOrderNumber" placeholder="e.g. ORD-002">
+                        </div>
+                        <div>
+                            <label>Order Date</label>
+                            <input type="date" id="newOrderDate">
+                        </div>
+                        <div>
+                            <label>Required By</label>
+                            <input type="date" id="newOrderRequiredBy">
+                        </div>
+                        <div>
+                            <label>Van</label>
+                            <select id="newOrderVan">
+                                <option value="">— Select Van —</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Day</label>
+                            <select id="newOrderDay">
+                                <option value="">— Select Day —</option>
+                                <option value="1">Monday</option>
+                                <option value="2">Tuesday</option>
+                                <option value="3">Wednesday</option>
+                                <option value="4">Thursday</option>
+                                <option value="5">Friday</option>
+                                <option value="6">Saturday</option>
+                                <option value="7">Sunday</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Trolleys</label>
+                            <input type="number" id="newOrderTrolleys" min="0" value="0">
+                        </div>
+                        <div>
+                            <label>Plant Variety</label>
+                            <input type="text" id="newOrderPlant" placeholder="e.g. Rose 'Peace'">
+                        </div>
+                        <div>
+                            <label>No. of Plants</label>
+                            <input type="number" id="newOrderPlantCount" min="0" placeholder="0">
+                        </div>
+                        <div>
+                            <label>Pot Size</label>
+                            <input type="text" id="newOrderPotSize" placeholder="e.g. 3L">
+                        </div>
+                    </div>
+                    <div class="add-order-form-actions">
+                        <button class="pof-btn pof-btn-cancel" onclick="hideAddOrderForm()">
+                            <i class="fas fa-times"></i> Cancel
+                        </button>
+                        <button class="pof-btn pof-btn-save" id="addOrderSaveBtn" onclick="saveAdditionalOrder()">
+                            <i class="fas fa-check"></i> Add Order
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- ===== END ORDERS PANEL ===== -->
+
+            <div class="passport-tabs">
+                <button class="passport-tab active" data-tab="order" onclick="switchPassportTab('order', this)">1. Order Details</button>
+                <button class="passport-tab" data-tab="plant" onclick="switchPassportTab('plant', this)">2. Plant &amp; Quality</button>
+                <button class="passport-tab" data-tab="labelling" onclick="switchPassportTab('labelling', this)">3. Labelling</button>
+                <button class="passport-tab" data-tab="delivery" onclick="switchPassportTab('delivery', this)">4. Delivery</button>
+                <button class="passport-tab" data-tab="payment" onclick="switchPassportTab('payment', this)">5. Payment</button>
+                <button class="passport-tab" data-tab="packing" onclick="switchPassportTab('packing', this)">6. Packing Check</button>
+            </div>
+
+            <div id="passportOrderTab" class="passport-tab-content active">
+                <form id="passportOrderForm" class="passport-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Order Number</label>
+                            <input type="text" id="passportOrderNumber" placeholder="e.g. ORD-2024-001">
+                        </div>
+                        <div class="form-group">
+                            <label>Order Date</label>
+                            <input type="date" id="passportOrderDate">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Required By Date</label>
+                            <input type="date" id="passportRequiredByDate">
+                        </div>
+                        <div class="form-group">
+                            <label>Taken By (Staff)</label>
+                            <input type="text" id="passportTakenBy" placeholder="Staff name">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Customer Contact No</label>
+                            <input type="tel" id="passportCustomerContact" placeholder="+44 ...">
+                        </div>
+                        <div class="form-group">
+                            <label>Customer Email</label>
+                            <input type="email" id="passportCustomerEmail" placeholder="customer@example.com">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Account Type</label>
+                            <select id="passportAccountType">
+                                <option value="">Select...</option>
+                                <option value="Credit Account">Credit Account</option>
+                                <option value="Pay in Advance">Pay in Advance</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>PO Number</label>
+                            <input type="text" id="passportPoNumber" placeholder="Purchase Order #">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Invoice Delivery</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="invoiceDelivery" value="Email"> Email</label>
+                            <label><input type="radio" name="invoiceDelivery" value="Post"> Post</label>
+                            <label><input type="radio" name="invoiceDelivery" value="With Delivery"> With Delivery</label>
+                        </div>
+                    </div>
+                    <div class="form-group" id="invoiceEmailGroup" style="display:none;">
+                        <label>Email Address for Invoice</label>
+                        <input type="email" id="passportInvoiceEmail" placeholder="invoice@example.com">
+                    </div>
+                </form>
+            </div>
+
+            <div id="passportPlantTab" class="passport-tab-content">
+                <form class="passport-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Plant Variety / Name</label>
+                            <input type="text" id="passportPlantVariety" placeholder="e.g. Rose 'Peace'">
+                        </div>
+                        <div class="form-group">
+                            <label>Number of Plants</label>
+                            <input type="number" id="passportNumberOfPlants" min="0">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Pot Size Required</label>
+                            <input type="text" id="passportPotSize" placeholder="e.g. 2L, 3L, 5L">
+                        </div>
+                        <div class="form-group">
+                            <label>Pot Colour / Type</label>
+                            <input type="text" id="passportPotColor" placeholder="e.g. Terracotta, Black">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Quality Grade</label>
+                            <select id="passportQualityGrade">
+                                <option value="">Select...</option>
+                                <option value="Premium">Premium</option>
+                                <option value="Standard">Standard</option>
+                                <option value="Budget">Budget</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Colours to AVOID</label>
+                            <input type="text" id="passportColoursToAvoid" placeholder="e.g. Red, Pink">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Flower Stage Required</label>
+                            <select id="passportFlowerStage">
+                                <option value="">Select...</option>
+                                <option value="Bud">Bud</option>
+                                <option value="Semi-Open">Semi-Open</option>
+                                <option value="Full Flower">Full Flower</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Mixed Colours OK?</label>
+                            <select id="passportMixedColoursOk">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Preferred Height</label>
+                            <select id="passportPreferredHeight">
+                                <option value="">Select...</option>
+                                <option value="Small">Small</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Large">Large</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Blemish Tolerance</label>
+                            <select id="passportBlemishTolerance">
+                                <option value="">Select...</option>
+                                <option value="None">None</option>
+                                <option value="Minor OK">Minor OK</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Specific Colour Requirements</label>
+                        <textarea id="passportSpecificColours" rows="2" placeholder="e.g. Mix of pastels, no bright colours"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Additional Plant Notes</label>
+                        <textarea id="passportAdditionalPlantNotes" rows="3" placeholder="Any special requirements..."></textarea>
+                    </div>
+                </form>
+            </div>
+
+            <div id="passportLabellingTab" class="passport-tab-content">
+                <form class="passport-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Barcoded Labels Required?</label>
+                            <select id="passportBarcodedLabels">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Pre-Priced Labels?</label>
+                            <select id="passportPrePricedLabels">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Label Format / Special Instructions</label>
+                        <textarea id="passportLabelInstructions" rows="3" placeholder="e.g. 'Price: £4.99', 'Barcode format: EAN-13'"></textarea>
+                    </div>
+                </form>
+            </div>
+
+            <div id="passportDeliveryTab" class="passport-tab-content">
+                <form class="passport-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Fulfilment Method</label>
+                            <select id="passportFulfilmentMethod">
+                                <option value="Delivery">Delivery</option>
+                                <option value="Collection from Site">Collection from Site</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Preferred Delivery Day</label>
+                            <select id="passportPreferredDeliveryDay">
+                                <option value="">Select...</option>
+                                <option value="Mon">Monday</option>
+                                <option value="Tue">Tuesday</option>
+                                <option value="Wed">Wednesday</option>
+                                <option value="Thu">Thursday</option>
+                                <option value="Fri">Friday</option>
+                                <option value="Sat">Saturday</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Preferred Time Window</label>
+                            <select id="passportPreferredTimeWindow" onchange="toggleSpecificTime()">
+                                <option value="Morning (AM)">Morning (AM)</option>
+                                <option value="Afternoon (PM)">Afternoon (PM)</option>
+                                <option value="Specific: ____">Specific Time</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="specificTimeGroup" style="display:none;">
+                            <label>Specific Time</label>
+                            <input type="text" id="passportSpecificTime" placeholder="e.g. 10:30 AM">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Site Access Restrictions?</label>
+                            <select id="passportSiteAccessRestrictions" onchange="toggleAccessTimes()">
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="accessTimesGroup" style="display:none;">
+                            <label>Access Times</label>
+                            <input type="text" id="passportSiteAccessTimes" placeholder="e.g. 9am-5pm only">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>On-Site Contact Name</label>
+                            <input type="text" id="passportOnsiteContactName" placeholder="Contact person">
+                        </div>
+                        <div class="form-group">
+                            <label>On-Site Contact Phone</label>
+                            <input type="tel" id="passportOnsiteContactPhone" placeholder="Phone number">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Full Delivery Address</label>
+                        <textarea id="passportFullAddress" rows="2" placeholder="Full address including postcode"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Special Delivery Instructions</label>
+                        <textarea id="passportSpecialDeliveryInstructions" rows="3" placeholder="e.g. 'Leave with neighbour', 'Gate code: 1234'"></textarea>
+                    </div>
+                </form>
+            </div>
+
+            <div id="passportPaymentTab" class="passport-tab-content">
+                <form class="passport-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Payment Terms</label>
+                            <select id="passportPaymentTerms">
+                                <option value="Credit Account">Credit Account</option>
+                                <option value="Payment in Advance">Payment in Advance</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Payment Method</label>
+                            <select id="passportPaymentMethod">
+                                <option value="BACS">BACS</option>
+                                <option value="Card">Card</option>
+                                <option value="Cash">Cash</option>
+                                <option value="Cheque">Cheque</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Payment Received? (Advance)</label>
+                            <select id="passportPaymentReceived">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                                <option value="N/A">N/A</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Amount Paid (£)</label>
+                            <input type="number" id="passportAmountPaid" min="0" step="0.01" value="0">
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div id="passportPackingTab" class="passport-tab-content">
+                <form class="passport-form">
+                    <div class="packing-warning">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        This section should only be completed at time of packing
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Packed By (Name)</label>
+                            <input type="text" id="passportPackedBy" placeholder="Picker name">
+                        </div>
+                        <div class="form-group">
+                            <label>Date Packed</label>
+                            <input type="date" id="passportDatePacked">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Flower Stage Confirmed</label>
+                            <select id="passportFlowerStageConfirmed">
+                                <option value="">Select...</option>
+                                <option value="Bud">Bud</option>
+                                <option value="Semi-Open">Semi-Open</option>
+                                <option value="Full Flower">Full Flower</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Quality Grade Met?</label>
+                            <select id="passportQualityGradeMet" onchange="toggleQualityNotes()">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group" id="qualityNotesGroup" style="display:none;">
+                        <label>Quality Notes</label>
+                        <input type="text" id="passportQualityNotes" placeholder="Reason for not meeting grade">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Labels Applied?</label>
+                            <select id="passportLabelsApplied">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Barcode Checked?</label>
+                            <select id="passportBarcodeChecked">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                                <option value="N/A">N/A</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Any Substitutions Made?</label>
+                            <select id="passportSubstitutionsMade" onchange="toggleSubstitutionDetails()">
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="substitutionDetailsGroup" style="display:none;">
+                            <label>Substitution Details</label>
+                            <input type="text" id="passportSubstitutionDetails" placeholder="What was substituted?">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Checked By (Supervisor)</label>
+                            <input type="text" id="passportCheckedBy" placeholder="Supervisor name">
+                        </div>
+                        <div class="form-group">
+                            <label>Sign-Off</label>
+                            <input type="text" id="passportSignOff" placeholder="Signature / Initials">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal-footer passport-footer">
+            <div class="passport-status incomplete" id="passportCompletionStatus">
+                <i class="fas fa-info-circle"></i>
+                <span id="passportCompletionText">Order details incomplete</span>
+            </div>
+            <div class="passport-actions">
+                <button class="action-btn btn-secondary" onclick="closePassportModal()">Cancel</button>
+                <button class="action-btn btn-success" onclick="savePassportData()">Save Passport</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* ===== PASSPORT MODAL BASE ===== */
+.passport-modal { max-width: 900px !important; width: 95% !important; }
+.passport-header { background: linear-gradient(135deg, #6f42c1, #8b5cf6) !important; }
+.passport-body { padding: 0 !important; max-height: 75vh !important; overflow-y: auto !important; }
+.passport-customer-info {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    padding: 12px 20px; border-bottom: 2px solid #dee2e6;
+    font-weight: 500; color: #495057; font-size: 13px;
+}
+.passport-customer-info i { color: #6f42c1; margin-right: 6px; }
+
+/* ===== ORDERS OVERVIEW PANEL ===== */
+.passport-orders-panel {
+    background: #f5f0ff;
+    border-bottom: 2px solid #d8ccff;
+    padding: 12px 18px 14px;
+}
+.passport-orders-header {
+    display: flex; align-items: center;
+    justify-content: space-between; margin-bottom: 10px;
+}
+.passport-orders-title {
+    font-size: 13px; font-weight: 700; color: #4c1d95;
+    display: flex; align-items: center; gap: 7px;
+}
+.orders-total-badge {
+    background: #7c3aed; color: white; font-size: 11px;
+    padding: 2px 9px; border-radius: 20px; font-weight: 700;
+    min-width: 22px; text-align: center; display: inline-block;
+}
+.btn-add-order {
+    background: #7c3aed; color: white; border: none;
+    padding: 7px 14px; border-radius: 8px; font-size: 12px;
+    font-weight: 600; cursor: pointer; display: flex;
+    align-items: center; gap: 6px; transition: background 0.2s; flex-shrink: 0;
+}
+.btn-add-order:hover { background: #6d28d9; }
+.passport-orders-list { display: flex; flex-direction: column; gap: 6px; }
+.passport-order-row {
+    background: white; border: 2px solid #e5e7eb;
+    border-radius: 10px; padding: 9px 12px;
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+.passport-order-row.primary-order { border-color: #7c3aed; background: #faf5ff; }
+.order-row-num {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: #7c3aed; color: white; font-size: 11px;
+    font-weight: 700; display: flex; align-items: center;
+    justify-content: center; flex-shrink: 0;
+}
+.order-row-num.primary { background: #059669; }
+.order-row-info { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; flex: 1; min-width: 0; }
+.order-row-tag { font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: 600; white-space: nowrap; }
+.order-row-tag.order-num   { background: #ede9fe; color: #5b21b6; }
+.order-row-tag.van-tag     { background: #d1fae5; color: #065f46; }
+.order-row-tag.day-tag     { background: #dbeafe; color: #1e40af; }
+.order-row-tag.plant-tag   { background: #fef3c7; color: #92400e; }
+.order-row-tag.trolley-tag { background: #fee2e2; color: #991b1b; }
+.order-row-label-primary   { font-size: 10px; color: #059669; font-weight: 700; white-space: nowrap; }
+.order-row-date            { font-size: 10px; color: #6b7280; white-space: nowrap; }
+.order-row-actions         { display: flex; gap: 4px; flex-shrink: 0; }
+.por-btn { border: none; padding: 5px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; transition: background 0.15s; }
+.por-btn.edit   { background: #ede9fe; color: #5b21b6; }
+.por-btn.edit:hover   { background: #ddd6fe; }
+.por-btn.delete { background: #fee2e2; color: #991b1b; }
+.por-btn.delete:hover { background: #fca5a5; }
+
+/* Add/edit inline form */
+.add-order-form {
+    background: white; border: 2px dashed #a78bfa;
+    border-radius: 10px; padding: 14px; margin-top: 8px;
+}
+.add-order-form-title {
+    font-size: 12px; font-weight: 700; color: #4c1d95;
+    margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+}
+.add-order-form-grid {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px; margin-bottom: 12px;
+}
+.add-order-form-grid label {
+    font-size: 10px; font-weight: 700; color: #6b7280;
+    text-transform: uppercase; letter-spacing: 0.4px;
+    display: block; margin-bottom: 3px;
+}
+.add-order-form-grid input,
+.add-order-form-grid select {
+    width: 100%; padding: 6px 9px; border: 1px solid #d1d5db;
+    border-radius: 6px; font-size: 12px; outline: none;
+    box-sizing: border-box; background: white;
+}
+.add-order-form-grid input:focus,
+.add-order-form-grid select:focus { border-color: #7c3aed; }
+.add-order-form-actions { display: flex; gap: 8px; justify-content: flex-end; }
+.pof-btn {
+    border: none; padding: 7px 16px; border-radius: 7px;
+    font-size: 12px; font-weight: 600; cursor: pointer;
+    display: flex; align-items: center; gap: 5px; transition: background 0.15s;
+}
+.pof-btn-cancel { background: #f3f4f6; color: #374151; }
+.pof-btn-cancel:hover { background: #e5e7eb; }
+.pof-btn-save   { background: #7c3aed; color: white; }
+.pof-btn-save:hover { background: #6d28d9; }
+
+/* Multi-order badge */
+.passport-multi-order-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: linear-gradient(135deg, #7c3aed, #4f46e5);
+    color: white; font-size: 10px; font-weight: 700;
+    padding: 2px 8px; border-radius: 10px;
+    margin-left: 6px; vertical-align: middle;
+}
+
+/* ===== TABS ===== */
+.passport-tabs {
+    display: flex; background: #f1f3f5;
+    border-bottom: 2px solid #dee2e6;
+    overflow-x: auto; padding: 5px; flex-shrink: 0;
+}
+.passport-tab {
+    padding: 10px 18px; background: transparent; border: none;
+    border-radius: 30px; font-weight: 600; font-size: 0.85rem;
+    color: #6c757d; cursor: pointer; white-space: nowrap; transition: all 0.2s;
+}
+.passport-tab:hover { background: rgba(111,66,193,0.1); color: #6f42c1; }
+.passport-tab.active { background: #6f42c1; color: white; }
+
+/* ===== TAB CONTENT ===== */
+.passport-tab-content { display: none; padding: 22px 25px; background: white; }
+.passport-tab-content.active { display: block; }
+.passport-form { display: flex; flex-direction: column; gap: 14px; }
+.passport-form .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.passport-form .form-group { margin-bottom: 0; }
+.passport-form label { font-weight: 600; color: #495057; font-size: 0.88rem; margin-bottom: 4px; display: block; }
+.passport-form input,
+.passport-form select,
+.passport-form textarea {
+    width: 100%; padding: 9px 11px; border: 2px solid #e9ecef;
+    border-radius: 8px; font-size: 0.93rem; transition: all 0.2s; box-sizing: border-box;
+}
+.passport-form input:focus,
+.passport-form select:focus,
+.passport-form textarea:focus { border-color: #6f42c1; outline: none; box-shadow: 0 0 0 3px rgba(111,66,193,0.1); }
+.passport-form textarea { resize: vertical; min-height: 75px; }
+.radio-group { display: flex; gap: 18px; padding: 7px 0; }
+.radio-group label { display: flex; align-items: center; gap: 5px; font-weight: normal; cursor: pointer; }
+.packing-warning {
+    background: #fff3cd; border: 2px solid #ffc107; border-radius: 8px;
+    padding: 11px 14px; margin-bottom: 16px; color: #856404;
+    display: flex; align-items: center; gap: 10px; font-weight: 600;
+}
+
+/* ===== FOOTER ===== */
+.passport-footer {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 13px 22px; background: #f8f9fa; border-top: 2px solid #dee2e6; flex-shrink: 0;
+}
+.passport-status {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 14px; border-radius: 30px; font-size: 0.88rem; font-weight: 500;
+}
+.passport-status.incomplete { background: #f8d7da; color: #721c24; }
+.passport-status.complete   { background: #d4edda; color: #155724; }
+.passport-actions { display: flex; gap: 10px; }
+
+@media (max-width: 768px) {
+    .passport-form .form-row { grid-template-columns: 1fr; gap: 10px; }
+    .passport-tabs { flex-wrap: wrap; }
+    .passport-tab  { flex: 1 1 auto; text-align: center; padding: 9px; }
+    .add-order-form-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 480px) {
+    .add-order-form-grid { grid-template-columns: 1fr; }
+}
+</style>
+
+<script>
+let currentPassportCustomerId = null;
+let _editingOrderIdx = null;
+
+// ===================================================
+//  ORDERS PANEL
+// ===================================================
+function renderOrdersPanel(customer) {
+    if (!customer) return;
+    if (!customer.passport) customer.passport = {};
+    if (!Array.isArray(customer.passport.orders)) customer.passport.orders = [];
+
+    const orders = customer.passport.orders;
+    const total  = 1 + orders.length;
+    const badge  = document.getElementById('ordersTotalBadge');
+    if (badge) badge.textContent = total;
+
+    const list = document.getElementById('passportOrdersList');
+    if (!list) return;
+
+    const dayNames = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+
+    // Primary order row
+    const primaryVan      = customer.assignedVan && typeof VANS !== 'undefined' ? VANS.find(v => v.id === customer.assignedVan) : null;
+    const primaryDay      = customer.assignedDay ? dayNames[customer.assignedDay - 1] : null;
+    const primaryOrderNum = customer.passport.orderNumber || '—';
+    const primaryPlant    = customer.passport.plantVariety || '';
+    const primaryTrolleys = parseInt(customer.passport.trolleyCount) || 0;
+
+    let html = `
+        <div class="passport-order-row primary-order">
+            <div class="order-row-num primary">1</div>
+            <div class="order-row-info">
+                <span class="order-row-tag order-num"><i class="fas fa-hashtag"></i> ${primaryOrderNum}</span>
+                ${primaryVan ? `<span class="order-row-tag van-tag"><i class="fas fa-truck"></i> ${primaryVan.name}</span>` : '<span class="order-row-tag" style="background:#f3f4f6;color:#9ca3af;font-style:italic;">No van yet</span>'}
+                ${primaryDay ? `<span class="order-row-tag day-tag"><i class="fas fa-calendar"></i> ${primaryDay}</span>` : ''}
+                ${primaryPlant ? `<span class="order-row-tag plant-tag"><i class="fas fa-leaf"></i> ${primaryPlant}</span>` : ''}
+                ${primaryTrolleys > 0 ? `<span class="order-row-tag trolley-tag"><i class="fas fa-dolly"></i> ${primaryTrolleys} trolley${primaryTrolleys !== 1 ? 's' : ''}</span>` : ''}
+            </div>
+            <span class="order-row-label-primary">Primary</span>
+            <div class="order-row-actions">
+                <button class="por-btn edit" onclick="switchToTab('order')" title="Edit in Order Details tab">
+                    <i class="fas fa-edit"></i> Edit
+                </button>
+            </div>
+        </div>`;
+
+    orders.forEach(function(order, idx) {
+        var van      = order.vanId && typeof VANS !== 'undefined' ? VANS.find(function(v){ return v.id === parseInt(order.vanId); }) : null;
+        var day      = order.dayId ? dayNames[parseInt(order.dayId) - 1] : null;
+        var trolleys = parseInt(order.trolleyCount) || 0;
+        html += `
+            <div class="passport-order-row">
+                <div class="order-row-num">${idx + 2}</div>
+                <div class="order-row-info">
+                    <span class="order-row-tag order-num"><i class="fas fa-hashtag"></i> ${order.orderNumber || '—'}</span>
+                    ${van  ? `<span class="order-row-tag van-tag"><i class="fas fa-truck"></i> ${van.name}</span>` : '<span class="order-row-tag" style="background:#f3f4f6;color:#9ca3af;font-style:italic;">No van</span>'}
+                    ${day  ? `<span class="order-row-tag day-tag"><i class="fas fa-calendar"></i> ${day}</span>` : ''}
+                    ${order.plantVariety ? `<span class="order-row-tag plant-tag"><i class="fas fa-leaf"></i> ${order.plantVariety}${order.numberOfPlants ? ' &times;' + order.numberOfPlants : ''}</span>` : ''}
+                    ${trolleys > 0 ? `<span class="order-row-tag trolley-tag"><i class="fas fa-dolly"></i> ${trolleys} trolley${trolleys !== 1 ? 's' : ''}</span>` : ''}
+                    ${order.potSize ? `<span class="order-row-tag" style="background:#f3f4f6;color:#374151;">${order.potSize}</span>` : ''}
+                </div>
+                <span class="order-row-date">${order.orderDate || ''}</span>
+                <div class="order-row-actions">
+                    <button class="por-btn edit" onclick="editAdditionalOrder(${idx})"><i class="fas fa-edit"></i></button>
+                    <button class="por-btn delete" onclick="removeAdditionalOrder(${idx})"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>`;
+    });
+
+    list.innerHTML = html;
+}
+
+function showAddOrderForm(editIdx) {
+    _editingOrderIdx = (editIdx !== undefined && editIdx !== null) ? editIdx : null;
+    var form    = document.getElementById('addOrderForm');
+    var title   = document.getElementById('addOrderFormTitle');
+    var saveBtn = document.getElementById('addOrderSaveBtn');
+    if (!form) return;
+
+    // Populate van dropdown
+    var vanSel = document.getElementById('newOrderVan');
+    if (vanSel && typeof VANS !== 'undefined') {
+        vanSel.innerHTML = '<option value="">— Select Van —</option>' +
+            VANS.map(function(v){ return '<option value="' + v.id + '">' + v.name + '</option>'; }).join('');
+    }
+
+    if (_editingOrderIdx !== null) {
+        var customer = customers.find(function(c){ return c.id === currentPassportCustomerId; });
+        var order = customer && customer.passport && customer.passport.orders ? customer.passport.orders[_editingOrderIdx] : null;
+        if (!order) return;
+        title.textContent = 'Edit Order ' + (_editingOrderIdx + 2);
+        saveBtn.innerHTML = '<i class="fas fa-check"></i> Save Changes';
+        document.getElementById('newOrderNumber').value     = order.orderNumber    || '';
+        document.getElementById('newOrderDate').value       = order.orderDate      || '';
+        document.getElementById('newOrderRequiredBy').value = order.requiredByDate || '';
+        document.getElementById('newOrderVan').value        = order.vanId          || '';
+        document.getElementById('newOrderDay').value        = order.dayId          || '';
+        document.getElementById('newOrderPlant').value      = order.plantVariety   || '';
+        document.getElementById('newOrderPlantCount').value = order.numberOfPlants || '';
+        document.getElementById('newOrderPotSize').value    = order.potSize        || '';
+        document.getElementById('newOrderTrolleys').value   = order.trolleyCount   || 0;
+    } else {
+        title.textContent = 'New Additional Order';
+        saveBtn.innerHTML = '<i class="fas fa-check"></i> Add Order';
+        document.getElementById('newOrderNumber').value     = '';
+        document.getElementById('newOrderDate').value       = new Date().toISOString().split('T')[0];
+        document.getElementById('newOrderRequiredBy').value = '';
+        document.getElementById('newOrderVan').value        = '';
+        document.getElementById('newOrderDay').value        = '';
+        document.getElementById('newOrderPlant').value      = '';
+        document.getElementById('newOrderPlantCount').value = '';
+        document.getElementById('newOrderPotSize').value    = '';
+        document.getElementById('newOrderTrolleys').value   = '0';
+    }
+
+    form.style.display = 'block';
+    setTimeout(function(){ form.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 50);
+}
+
+function hideAddOrderForm() {
+    var form = document.getElementById('addOrderForm');
+    if (form) form.style.display = 'none';
+    _editingOrderIdx = null;
+}
+
+function saveAdditionalOrder() {
+    var customer = customers.find(function(c){ return c.id === currentPassportCustomerId; });
+    if (!customer) return;
+    if (!customer.passport) customer.passport = {};
+    if (!Array.isArray(customer.passport.orders)) customer.passport.orders = [];
+
+    var orderData = {
+        id:             _editingOrderIdx !== null ? customer.passport.orders[_editingOrderIdx].id : Date.now(),
+        orderNumber:    document.getElementById('newOrderNumber').value.trim(),
+        orderDate:      document.getElementById('newOrderDate').value,
+        requiredByDate: document.getElementById('newOrderRequiredBy').value,
+        vanId:          document.getElementById('newOrderVan').value || null,
+        dayId:          document.getElementById('newOrderDay').value || null,
+        plantVariety:   document.getElementById('newOrderPlant').value.trim(),
+        numberOfPlants: parseInt(document.getElementById('newOrderPlantCount').value) || 0,
+        potSize:        document.getElementById('newOrderPotSize').value.trim(),
+        trolleyCount:   parseInt(document.getElementById('newOrderTrolleys').value) || 0,
+    };
+
+    if (_editingOrderIdx !== null) {
+        customer.passport.orders[_editingOrderIdx] = orderData;
+        if (typeof showNotification === 'function') showNotification('Order updated \u2713', 'success');
+    } else {
+        customer.passport.orders.push(orderData);
+        if (typeof showNotification === 'function') showNotification('Order ' + (orderData.orderNumber || '#' + (customer.passport.orders.length + 1)) + ' added \u2713', 'success');
+    }
+
+    hideAddOrderForm();
+    renderOrdersPanel(customer);
+    if (typeof saveData === 'function') saveData();
+    if (typeof updateAllDisplays === 'function') updateAllDisplays();
+}
+
+function editAdditionalOrder(idx) { showAddOrderForm(idx); }
+
+function removeAdditionalOrder(idx) {
+    var customer = customers.find(function(c){ return c.id === currentPassportCustomerId; });
+    if (!customer || !customer.passport || !customer.passport.orders) return;
+    var order = customer.passport.orders[idx];
+    if (!confirm('Remove order "' + (order.orderNumber || 'Order ' + (idx + 2)) + '"?')) return;
+    customer.passport.orders.splice(idx, 1);
+    hideAddOrderForm();
+    renderOrdersPanel(customer);
+    if (typeof saveData === 'function') saveData();
+    if (typeof updateAllDisplays === 'function') updateAllDisplays();
+    if (typeof showNotification === 'function') showNotification('Order removed', 'info');
+}
+
+function switchToTab(tabName) {
+    var btn = document.querySelector('.passport-tab[data-tab="' + tabName + '"]');
+    if (btn) { switchPassportTab(tabName, btn); }
+}
+
+// ===================================================
+//  OPEN / CLOSE / TAB SWITCHING
+// ===================================================
+function openPassportModal(customerId) {
+    var customer = customers.find(function(c){ return c.id === customerId; });
+    if (!customer) return;
+
+    currentPassportCustomerId = customerId;
+
+    if (!customer.passport) customer.passport = {};
+    if (!Array.isArray(customer.passport.orders)) customer.passport.orders = [];
+
+    var totalOrderCount = 1 + customer.passport.orders.length;
+    var multiOrderBadge = totalOrderCount > 1
+        ? '<span class="passport-multi-order-badge"><i class="fas fa-layer-group"></i> ' + totalOrderCount + ' Orders</span>'
+        : '';
+
+    document.getElementById('passportCustomerInfo').innerHTML =
+        '<i class="fas fa-building"></i> <strong>' + customer.name + '</strong>' + multiOrderBadge +
+        ' &nbsp;|&nbsp; <i class="fas fa-map-marker-alt"></i> ' + customer.address +
+        ' &nbsp;|&nbsp; <i class="fas fa-tag"></i> ' + customer.zone;
+
+    renderOrdersPanel(customer);
+    hideAddOrderForm();
+    loadPassportData(customer.passport);
+    updatePassportCompletionStatus(customer.passport);
+
+    // Reset tabs cleanly — no dependency on event object
+    document.querySelectorAll('.passport-tab').forEach(function(t){ t.classList.remove('active'); });
+    document.querySelectorAll('.passport-tab-content').forEach(function(t){ t.classList.remove('active'); });
+    var firstBtn = document.querySelector('.passport-tab[data-tab="order"]');
+    var firstContent = document.getElementById('passportOrderTab');
+    if (firstBtn) firstBtn.classList.add('active');
+    if (firstContent) firstContent.classList.add('active');
+
+    document.getElementById('customerPassportModal').classList.add('active');
+}
+
+function closePassportModal() {
+    document.getElementById('customerPassportModal').classList.remove('active');
+    currentPassportCustomerId = null;
+    _editingOrderIdx = null;
+}
+
+function switchPassportTab(tabName, btnEl) {
+    document.querySelectorAll('.passport-tab').forEach(function(t){ t.classList.remove('active'); });
+    document.querySelectorAll('.passport-tab-content').forEach(function(t){ t.classList.remove('active'); });
+    if (btnEl) btnEl.classList.add('active');
+    var capName = tabName.charAt(0).toUpperCase() + tabName.slice(1);
+    var content = document.getElementById('passport' + capName + 'Tab');
+    if (content) content.classList.add('active');
+}
+
+// ===================================================
+//  FORM HELPERS
+// ===================================================
+function toggleSpecificTime() {
+    var sel = document.getElementById('passportPreferredTimeWindow');
+    var grp = document.getElementById('specificTimeGroup');
+    if (grp) grp.style.display = sel.value === 'Specific: ____' ? 'block' : 'none';
+}
+function toggleAccessTimes() {
+    var sel = document.getElementById('passportSiteAccessRestrictions');
+    var grp = document.getElementById('accessTimesGroup');
+    if (grp) grp.style.display = sel.value === 'Yes' ? 'block' : 'none';
+}
+function toggleQualityNotes() {
+    var sel = document.getElementById('passportQualityGradeMet');
+    var grp = document.getElementById('qualityNotesGroup');
+    if (grp) grp.style.display = sel.value === 'No' ? 'block' : 'none';
+}
+function toggleSubstitutionDetails() {
+    var sel = document.getElementById('passportSubstitutionsMade');
+    var grp = document.getElementById('substitutionDetailsGroup');
+    if (grp) grp.style.display = sel.value === 'Yes' ? 'block' : 'none';
+}
+
+function initPassportEventListeners() {
+    document.querySelectorAll('input[name="invoiceDelivery"]').forEach(function(radio) {
+        radio.addEventListener('change', function() {
+            var grp = document.getElementById('invoiceEmailGroup');
+            if (grp) grp.style.display = this.value === 'Email' ? 'block' : 'none';
+        });
+    });
+}
+
+// ===================================================
+//  LOAD / SAVE
+// ===================================================
+function loadPassportData(passport) {
+    function set(id, val) { var el = document.getElementById(id); if (el) el.value = (val !== undefined && val !== null) ? val : ''; }
+    set('passportOrderNumber',    passport.orderNumber);
+    set('passportOrderDate',      passport.orderDate);
+    set('passportRequiredByDate', passport.requiredByDate);
+    set('passportTakenBy',        passport.takenBy);
+    set('passportCustomerContact',passport.customerContact);
+    set('passportCustomerEmail',  passport.customerEmail);
+    set('passportAccountType',    passport.accountType);
+    set('passportPoNumber',       passport.poNumber);
+    set('passportInvoiceEmail',   passport.invoiceEmail);
+    if (passport.invoiceDelivery) {
+        var radio = document.querySelector('input[name="invoiceDelivery"][value="' + passport.invoiceDelivery + '"]');
+        if (radio) radio.checked = true;
+        var grp = document.getElementById('invoiceEmailGroup');
+        if (grp) grp.style.display = passport.invoiceDelivery === 'Email' ? 'block' : 'none';
+    }
+    set('passportPlantVariety',         passport.plantVariety);
+    set('passportNumberOfPlants',        passport.numberOfPlants);
+    set('passportPotSize',               passport.potSize);
+    set('passportPotColor',              passport.potColor);
+    set('passportQualityGrade',          passport.qualityGrade);
+    set('passportColoursToAvoid',        passport.coloursToAvoid);
+    set('passportFlowerStage',           passport.flowerStage);
+    set('passportMixedColoursOk',        passport.mixedColoursOk ? 'Yes' : 'No');
+    set('passportPreferredHeight',       passport.preferredHeight);
+    set('passportBlemishTolerance',      passport.blemishTolerance);
+    set('passportSpecificColours',       passport.specificColours);
+    set('passportAdditionalPlantNotes',  passport.additionalPlantNotes);
+    set('passportBarcodedLabels',        passport.barcodedLabels  ? 'Yes' : 'No');
+    set('passportPrePricedLabels',       passport.prePricedLabels ? 'Yes' : 'No');
+    set('passportLabelInstructions',     passport.labelInstructions);
+    set('passportFulfilmentMethod',      passport.fulfilmentMethod || 'Delivery');
+    set('passportPreferredDeliveryDay',  passport.preferredDeliveryDay);
+    set('passportPreferredTimeWindow',   passport.preferredTimeWindow || 'Morning (AM)');
+    set('passportSiteAccessRestrictions',passport.siteAccessRestrictions ? 'Yes' : 'No');
+    set('passportSiteAccessTimes',       passport.siteAccessTimes);
+    set('passportOnsiteContactName',     passport.onsiteContactName);
+    set('passportOnsiteContactPhone',    passport.onsiteContactPhone);
+    set('passportFullAddress',           passport.fullAddress);
+    set('passportSpecialDeliveryInstructions', passport.specialDeliveryInstructions);
+    toggleSpecificTime(); toggleAccessTimes();
+    set('passportPaymentTerms',   passport.paymentTerms  || 'Credit Account');
+    set('passportPaymentMethod',  passport.paymentMethod || 'BACS');
+    set('passportPaymentReceived',passport.paymentReceived ? 'Yes' : 'No');
+    set('passportAmountPaid',     passport.amountPaid || 0);
+    set('passportPackedBy',             passport.packedBy);
+    set('passportDatePacked',           passport.datePacked);
+    set('passportFlowerStageConfirmed', passport.flowerStageConfirmed);
+    set('passportQualityGradeMet',      passport.qualityGradeMet ? 'Yes' : 'No');
+    set('passportQualityNotes',         passport.qualityNotes);
+    set('passportLabelsApplied',        passport.labelsApplied ? 'Yes' : 'No');
+    set('passportBarcodeChecked',       passport.barcodeChecked || 'N/A');
+    set('passportSubstitutionsMade',    passport.substitutionsMade ? 'Yes' : 'No');
+    set('passportSubstitutionDetails',  passport.substitutionDetails);
+    set('passportCheckedBy',            passport.checkedBy);
+    set('passportSignOff',              passport.signOff);
+    toggleQualityNotes(); toggleSubstitutionDetails();
+}
+
+function savePassportData() {
+    if (!currentPassportCustomerId) return;
+    var customer = customers.find(function(c){ return c.id === currentPassportCustomerId; });
+    if (!customer) return;
+    function g(id) { var el = document.getElementById(id); return el ? el.value : ''; }
+    var checkedRadio = document.querySelector('input[name="invoiceDelivery"]:checked');
+    customer.passport = {
+        orderNumber:    g('passportOrderNumber'),
+        orderDate:      g('passportOrderDate'),
+        requiredByDate: g('passportRequiredByDate'),
+        takenBy:        g('passportTakenBy'),
+        customerContact:g('passportCustomerContact'),
+        customerEmail:  g('passportCustomerEmail'),
+        accountType:    g('passportAccountType'),
+        poNumber:       g('passportPoNumber'),
+        invoiceDelivery: checkedRadio ? checkedRadio.value : '',
+        invoiceEmail:   g('passportInvoiceEmail'),
+        plantVariety:        g('passportPlantVariety'),
+        numberOfPlants:      g('passportNumberOfPlants'),
+        potSize:             g('passportPotSize'),
+        potColor:            g('passportPotColor'),
+        qualityGrade:        g('passportQualityGrade'),
+        coloursToAvoid:      g('passportColoursToAvoid'),
+        flowerStage:         g('passportFlowerStage'),
+        mixedColoursOk:      g('passportMixedColoursOk') === 'Yes',
+        preferredHeight:     g('passportPreferredHeight'),
+        blemishTolerance:    g('passportBlemishTolerance'),
+        specificColours:     g('passportSpecificColours'),
+        additionalPlantNotes:g('passportAdditionalPlantNotes'),
+        barcodedLabels:      g('passportBarcodedLabels')  === 'Yes',
+        prePricedLabels:     g('passportPrePricedLabels') === 'Yes',
+        labelInstructions:   g('passportLabelInstructions'),
+        fulfilmentMethod:    g('passportFulfilmentMethod'),
+        preferredDeliveryDay:g('passportPreferredDeliveryDay'),
+        preferredTimeWindow: g('passportPreferredTimeWindow') === 'Specific: ____' ? ('Specific: ' + g('passportSpecificTime')) : g('passportPreferredTimeWindow'),
+        siteAccessRestrictions:     g('passportSiteAccessRestrictions') === 'Yes',
+        siteAccessTimes:            g('passportSiteAccessTimes'),
+        onsiteContactName:          g('passportOnsiteContactName'),
+        onsiteContactPhone:         g('passportOnsiteContactPhone'),
+        fullAddress:                g('passportFullAddress'),
+        specialDeliveryInstructions:g('passportSpecialDeliveryInstructions'),
+        paymentTerms:    g('passportPaymentTerms'),
+        paymentMethod:   g('passportPaymentMethod'),
+        paymentReceived: g('passportPaymentReceived') === 'Yes',
+        amountPaid:      parseFloat(g('passportAmountPaid')) || 0,
+        packedBy:            g('passportPackedBy'),
+        datePacked:          g('passportDatePacked'),
+        flowerStageConfirmed:g('passportFlowerStageConfirmed'),
+        qualityGradeMet:     g('passportQualityGradeMet') === 'Yes',
+        qualityNotes:        g('passportQualityNotes'),
+        labelsApplied:       g('passportLabelsApplied') === 'Yes',
+        barcodeChecked:      g('passportBarcodeChecked'),
+        substitutionsMade:   g('passportSubstitutionsMade') === 'Yes',
+        substitutionDetails: g('passportSubstitutionDetails'),
+        checkedBy:           g('passportCheckedBy'),
+        signOff:             g('passportSignOff'),
+        lastUpdated: new Date().toISOString(),
+        updatedBy: window.currentUser ? (window.currentUser.fullName || window.currentUser.username) : 'Admin',
+        // Preserved fields
+        orders:              customer.passport.orders              || [],
+        trolleyCount:        customer.passport.trolleyCount        || 0,
+        isRepeatCustomer:    customer.passport.isRepeatCustomer    || false,
+        previousOrderCount:  customer.passport.previousOrderCount  || 0,
+        totalOrdersCount:    customer.passport.totalOrdersCount    || 0,
+        customerSince:       customer.passport.customerSince       || '',
+        potsToReturn:        customer.passport.potsToReturn        || false,
+        numberOfPotsToReturn:customer.passport.numberOfPotsToReturn|| 0,
+        potReturnNotes:      customer.passport.potReturnNotes      || '',
+        timestamps:          customer.passport.timestamps          || {},
+        pickingMetrics:      customer.passport.pickingMetrics      || {},
+    };
+    if (typeof updateAllDisplays === 'function') updateAllDisplays();
+    if (typeof saveData === 'function') saveData();
+    closePassportModal();
+    if (typeof showNotification === 'function') showNotification('Customer passport saved successfully', 'success');
+}
+
+function updatePassportCompletionStatus(passport) {
+    var required = ['orderNumber','orderDate','requiredByDate','takenBy','plantVariety','numberOfPlants','potSize','flowerStage'];
+    var done     = required.filter(function(f){ return passport[f] && passport[f].toString().trim() !== ''; });
+    var pct      = Math.round((done.length / required.length) * 100);
+    var statusEl = document.getElementById('passportCompletionStatus');
+    var textEl   = document.getElementById('passportCompletionText');
+    if (statusEl) statusEl.className = 'passport-status ' + (pct === 100 ? 'complete' : 'incomplete');
+    if (textEl)   textEl.textContent  = pct === 100
+        ? 'All required information complete'
+        : pct + '% complete \u2013 ' + (required.length - done.length) + ' field' + (required.length - done.length !== 1 ? 's' : '') + ' remaining';
+}
+
+// ===================================================
+//  EXPORTS
+// ===================================================
+window.openPassportModal          = openPassportModal;
+window.closePassportModal         = closePassportModal;
+window.switchPassportTab          = switchPassportTab;
+window.savePassportData           = savePassportData;
+window.toggleSpecificTime         = toggleSpecificTime;
+window.toggleAccessTimes          = toggleAccessTimes;
+window.toggleQualityNotes         = toggleQualityNotes;
+window.toggleSubstitutionDetails  = toggleSubstitutionDetails;
+window.initPassportEventListeners = initPassportEventListeners;
+window.renderOrdersPanel          = renderOrdersPanel;
+window.showAddOrderForm           = showAddOrderForm;
+window.hideAddOrderForm           = hideAddOrderForm;
+window.saveAdditionalOrder        = saveAdditionalOrder;
+window.editAdditionalOrder        = editAdditionalOrder;
+window.removeAdditionalOrder      = removeAdditionalOrder;
+window.switchToTab                = switchToTab;
+</script>

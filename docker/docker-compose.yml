@@ -1,0 +1,13 @@
+services:
+  app:
+    image: ghcr.io/YOUR_GITHUB_USERNAME/pep-delivery:latest
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+      - "3443:3443"
+    volumes:
+      - ./data:/app/server/data      # SQLite database + backups
+      - ./certs:/app/server/certs    # TLS certificates (persisted across restarts)
+      - ./logs:/app/logs             # Server logs
+    env_file:
+      - .env
